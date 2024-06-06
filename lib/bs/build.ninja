@@ -1,0 +1,15 @@
+rescript = 1
+g_finger := /Users/justinmagaram/Source/bug-project/node_modules/@rescript/core/lib/ocaml/install.stamp
+g_finger := /Users/justinmagaram/Source/bug-project/node_modules/@rescript/react/lib/ocaml/install.stamp
+rule astj
+  command = /Users/justinmagaram/Source/bug-project/node_modules/rescript/darwinarm64/bsc.exe  -bs-v 11.1.1 -bs-jsx 4 -uncurried -open RescriptCore -absname -bs-ast -o $out $i
+o src/Test.ast : astj ../../src/Test.res
+rule deps
+  command = /Users/justinmagaram/Source/bug-project/node_modules/rescript/darwinarm64/bsb_helper.exe -hash 7b18d7bf88188ea959648ad886c6913a $in
+  restat = 1
+o src/Test.d : deps src/Test.ast
+rule mij
+  command = /Users/justinmagaram/Source/bug-project/node_modules/rescript/darwinarm64/bsc.exe -I src/assets -I src -I /Users/justinmagaram/Source/bug-project/node_modules/@rescript/core/lib/ocaml -I /Users/justinmagaram/Source/bug-project/node_modules/@rescript/react/lib/ocaml -open RescriptCore  -uncurried -bs-package-name bug-project -bs-package-output esmodule:$in_d:.res.js -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
+o src/Test.cmj src/Test.cmi ../../src/Test.res.js : mij src/Test.ast
