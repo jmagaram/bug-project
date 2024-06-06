@@ -8,9 +8,14 @@ function Test(props) {
             });
 }
 
+function print_key(k) {
+  console.log(k.key);
+}
+
 var make = Test;
 
 export {
   make ,
+  print_key ,
 }
 /* react/jsx-runtime Not a pure module */
